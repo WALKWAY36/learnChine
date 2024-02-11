@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
-from .models import Room, Topic, Message, User
+from .models import Room, Topic, Message, User, Statistic
 from .forms import RoomForm, UserForm, MyUserCreationForm
 
 # Create your views here.
@@ -15,6 +15,7 @@ from .forms import RoomForm, UserForm, MyUserCreationForm
 #     {'id': 3, 'name': 'Frontend developers'},
 # ]
 
+done = 0
 
 def loginPage(request):
     page = 'login'
@@ -103,12 +104,15 @@ def room(request, pk):
 
 
 def userProfile(request, pk):
+    stat = Statistic.objects.get(user=request.user)
+    done = stat.task / 4 * 100
+
     user = User.objects.get(id=pk)
     rooms = user.room_set.all()
     room_messages = user.message_set.all()
     topics = Topic.objects.all()
     context = {'user': user, 'rooms': rooms,
-               'room_messages': room_messages, 'topics': topics}
+               'room_messages': room_messages, 'topics': topics, 'stat': stat, 'done': done}
     return render(request, 'base/profile.html', context)
 
 
@@ -202,3 +206,63 @@ def topicsPage(request):
 def activityPage(request):
     room_messages = Message.objects.all()
     return render(request, 'base/activity.html', {'room_messages': room_messages})
+
+
+def dict1(request):
+    # Получаем объект Statistic для текущего пользователя
+    stat, created = Statistic.objects.get_or_create(user=request.user)
+    
+    if request.method == 'POST':
+        if stat.task < 4:
+            # Если это POST-запрос, выполните инкрементирование
+            stat.task += 1
+            stat.save()
+        # После инкрементирования перенаправьте на ту же страницу или куда-то еще, в зависимости от вашей логики
+        return redirect('dict1')
+    else:
+        # Если это GET-запрос, просто отобразите страницу
+        return render(request, 'base/dict1.html', {'stat': stat})
+
+def dict2(request):
+    # Получаем объект Statistic для текущего пользователя
+    stat, created = Statistic.objects.get_or_create(user=request.user)
+    
+    if request.method == 'POST':
+        if stat.task < 4:
+            # Если это POST-запрос, выполните инкрементирование
+            stat.task += 1
+            stat.save()
+        # После инкрементирования перенаправьте на ту же страницу или куда-то еще, в зависимости от вашей логики
+        return redirect('dict2')
+    else:
+        # Если это GET-запрос, просто отобразите страницу
+        return render(request, 'base/dict2.html', {'stat': stat})
+
+def dict3(request):
+    stat, created = Statistic.objects.get_or_create(user=request.user)
+    
+    if request.method == 'POST':
+        if stat.task < 4:
+            # Если это POST-запрос, выполните инкрементирование
+            stat.task += 1
+            stat.save()
+        # После инкрементирования перенаправьте на ту же страницу или куда-то еще, в зависимости от вашей логики
+        return redirect('dict3')
+    else:
+        # Если это GET-запрос, просто отобразите страницу
+        return render(request, 'base/dict3.html', {'stat': stat})
+
+
+def dict4(request):
+    stat, created = Statistic.objects.get_or_create(user=request.user)
+    
+    if request.method == 'POST':
+        if stat.task < 4:
+            # Если это POST-запрос, выполните инкрементирование
+            stat.task += 1
+            stat.save()
+        # После инкрементирования перенаправьте на ту же страницу или куда-то еще, в зависимости от вашей логики
+        return redirect('dict4')
+    else:
+        # Если это GET-запрос, просто отобразите страницу
+        return render(request, 'base/dict4.html', {'stat': stat})

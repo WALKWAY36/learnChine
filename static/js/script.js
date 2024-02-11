@@ -67,3 +67,14 @@ if (photoInput)
 // Scroll to Bottom
 const conversationThread = document.querySelector(".room__box");
 if (conversationThread) conversationThread.scrollTop = conversationThread.scrollHeight;
+
+// document.addEventListener('DOMContentLoaded', function() {
+//   document.getElementById('done-form').addEventListener('submit', function(event) {
+//       event.preventDefault(); // Предотвратить отправку формы
+
+//       // Скрыть кнопку "Готово"
+//       document.getElementById('done-button').style.display = 'none';
+//       // Отобразить надпись "Вы уже прошли"
+//       document.getElementById('already-done').style.display = 'block';
+//   });
+// });

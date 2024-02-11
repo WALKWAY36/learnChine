@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MaxValueValidator
 
 class User(AbstractUser):
     name = models.CharField(max_length=200, null=True)
@@ -9,7 +10,7 @@ class User(AbstractUser):
     avatar = models.ImageField(null=True, default="avatar.svg")
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
 
 
 class Topic(models.Model):
@@ -47,3 +48,8 @@ class Message(models.Model):
 
     def __str__(self):
         return self.body[0:50]
+    
+
+class Statistic(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    task = models.IntegerField(default=0,  validators=[MaxValueValidator(5)])

@@ -1,0 +1,20 @@
+{% extends 'main.html' %} {% block content %}
+
+
+<div class="container">
+  <h1>Словарь4</h1>
+  {{ request.user }}
+  <h6>{{ stat.task }} из 4 - это 20%</h6>
+  <form id="done-form" method="post" action="{% url 'home' %}">
+    {% csrf_token %}
+    <button id="done-button" type="submit" name="done" value="Выполнено">Готово</button>
+  </form>
+  <p id="already-done" style="display: none;">Вы уже прошли это слово</p>
+  <a href="{% url 'dict3' %}"><i class="arrow left"></i></a>
+  <a href="{% url 'home' %}"><i class="arrow right"></i></a>
+  {% if stat.task == 4 %}
+    <h1>Поздравляю вы прошли все слова</h1>
+  {% endif %}
+</div>
+
+{% endblock content %}
