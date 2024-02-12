@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
-from .models import Room, Topic, Message, User, Statistic
+from .models import Room, Topic, Message, User, Statistic, Task
 from .forms import RoomForm, UserForm, MyUserCreationForm
 
 # Create your views here.
@@ -66,6 +66,9 @@ def registerPage(request):
 
 
 def home(request):
+    return render(request, 'base/home.html')
+
+def chat(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
 
     rooms = Room.objects.filter(
@@ -81,7 +84,7 @@ def home(request):
 
     context = {'rooms': rooms, 'topics': topics,
                'room_count': room_count, 'room_messages': room_messages}
-    return render(request, 'base/home.html', context)
+    return render(request, 'base/chat.html', context)
 
 
 def room(request, pk):
@@ -105,14 +108,16 @@ def room(request, pk):
 
 def userProfile(request, pk):
     stat = Statistic.objects.get(user=request.user)
-    done = stat.task / 4 * 100
+    statT = Task.objects.get(user=request.user)
+    done = stat.word / 4 * 100
+    doneT = statT.task / 4 * 100
 
     user = User.objects.get(id=pk)
     rooms = user.room_set.all()
     room_messages = user.message_set.all()
     topics = Topic.objects.all()
     context = {'user': user, 'rooms': rooms,
-               'room_messages': room_messages, 'topics': topics, 'stat': stat, 'done': done}
+               'room_messages': room_messages, 'topics': topics, 'stat': stat, 'done': done, 'statT':statT, 'doneT': doneT}
     return render(request, 'base/profile.html', context)
 
 
@@ -130,7 +135,7 @@ def createRoom(request):
             name=request.POST.get('name'),
             description=request.POST.get('description'),
         )
-        return redirect('home')
+        return redirect('chat')
 
     context = {'form': form, 'topics': topics}
     return render(request, 'base/room_form.html', context)
@@ -213,11 +218,10 @@ def dict1(request):
     stat, created = Statistic.objects.get_or_create(user=request.user)
     
     if request.method == 'POST':
-        if stat.task < 4:
+        if stat.word < 4:
             # Если это POST-запрос, выполните инкрементирование
-            stat.task += 1
+            stat.word += 1
             stat.save()
-        # После инкрементирования перенаправьте на ту же страницу или куда-то еще, в зависимости от вашей логики
         return redirect('dict1')
     else:
         # Если это GET-запрос, просто отобразите страницу
@@ -228,11 +232,10 @@ def dict2(request):
     stat, created = Statistic.objects.get_or_create(user=request.user)
     
     if request.method == 'POST':
-        if stat.task < 4:
+        if stat.word < 4:
             # Если это POST-запрос, выполните инкрементирование
-            stat.task += 1
+            stat.word += 1
             stat.save()
-        # После инкрементирования перенаправьте на ту же страницу или куда-то еще, в зависимости от вашей логики
         return redirect('dict2')
     else:
         # Если это GET-запрос, просто отобразите страницу
@@ -242,11 +245,10 @@ def dict3(request):
     stat, created = Statistic.objects.get_or_create(user=request.user)
     
     if request.method == 'POST':
-        if stat.task < 4:
+        if stat.word < 4:
             # Если это POST-запрос, выполните инкрементирование
-            stat.task += 1
+            stat.word += 1
             stat.save()
-        # После инкрементирования перенаправьте на ту же страницу или куда-то еще, в зависимости от вашей логики
         return redirect('dict3')
     else:
         # Если это GET-запрос, просто отобразите страницу
@@ -257,12 +259,71 @@ def dict4(request):
     stat, created = Statistic.objects.get_or_create(user=request.user)
     
     if request.method == 'POST':
-        if stat.task < 4:
+        if stat.word < 4:
             # Если это POST-запрос, выполните инкрементирование
-            stat.task += 1
+            stat.word += 1
             stat.save()
-        # После инкрементирования перенаправьте на ту же страницу или куда-то еще, в зависимости от вашей логики
         return redirect('dict4')
     else:
         # Если это GET-запрос, просто отобразите страницу
         return render(request, 'base/dict4.html', {'stat': stat})
+
+
+def task1(request):
+    # Получаем объект Statistic для текущего пользователя
+    statT, created = Task.objects.get_or_create(user=request.user)
+    
+    if request.method == 'POST':
+        if statT.task < 4:
+            # Если это POST-запрос, выполните инкрементирование
+            statT.task += 1
+            statT.save()
+        return redirect('task1')
+    else:
+        # Если это GET-запрос, просто отобразите страницу
+        return render(request, 'base/task1.html', {'statT': statT})
+
+
+def task2(request):
+    # Получаем объект Statistic для текущего пользователя
+    statT, created = Task.objects.get_or_create(user=request.user)
+    
+    if request.method == 'POST':
+        if statT.task < 4:
+            # Если это POST-запрос, выполните инкрементирование
+            statT.task += 1
+            statT.save()
+        return redirect('task2')
+    else:
+        # Если это GET-запрос, просто отобразите страницу
+        return render(request, 'base/task2.html', {'statT': statT})
+
+
+def task3(request):
+    # Получаем объект Statistic для текущего пользователя
+    statT, created = Task.objects.get_or_create(user=request.user)
+    
+    if request.method == 'POST':
+        if statT.task < 4:
+            # Если это POST-запрос, выполните инкрементирование
+            statT.task += 1
+            statT.save()
+        return redirect('task3')
+    else:
+        # Если это GET-запрос, просто отобразите страницу
+        return render(request, 'base/task3.html', {'statT': statT})
+
+
+def task4(request):
+    # Получаем объект Statistic для текущего пользователя
+    statT, created = Task.objects.get_or_create(user=request.user)
+    
+    if request.method == 'POST':
+        if statT.task < 4:
+            # Если это POST-запрос, выполните инкрементирование
+            statT.task += 1
+            statT.save()
+        return redirect('task4')
+    else:
+        # Если это GET-запрос, просто отобразите страницу
+        return render(request, 'base/task4.html', {'statT': statT})

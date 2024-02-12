@@ -1,0 +1,23 @@
+{% extends 'main.html' %} {% block content %}
+
+<div class="container">
+  <h1>Задание2</h1>
+  {{ request.user.username }}
+  {% if statT.task == 1 %}
+  <form id="done-form" method="post" action="{% url 'task2' %}">
+    {% csrf_token %}
+    <button id="done-button" type="submit" name="done" value="Выполнено">Готово</button>
+  </form>
+  {% elif statT.task > 1 and statT.task < 4  %}
+  <h1>Вы уже сделали это задание</h1>
+  {% elif statT.task < 1  %}
+  <h1>Выполните предыдущие задания</h1>
+  {% else %}
+  <h1>Поздравляю вы выполнили все задания</h1>
+  {% endif %}
+  <a href="{% url 'task1' %}"><i class="arrow left"></i></a>
+  <a href="{% url 'task3' %}"><i class="arrow right"></i></a>
+
+</div>
+
+{% endblock content %}

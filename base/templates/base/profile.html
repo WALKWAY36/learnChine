@@ -23,21 +23,23 @@
           {% endif %}
         </div>
         <div class="profile__about">
-          <h3>About</h3>
+          <h3>Данные о пользователе</h3>
           <p>
             {{user.bio}}
           </p>
-          <h3>Statistic</h3>
+          <h3>Статистика изученных слов</h3>
           <p>
-            Выполнено {{stat.task}} из 4 - это {{done}}%
+            Выполнено {{stat.word}} из 4 - это {{done}}%
+          </p>
+          <h3>Статистика пройденных заданий</h3>
+          <p>
+            Выполнено {{statT.task}} из 4 - это {{doneT}}%
           </p>
         </div>
       </div>
 
       <div class="roomList__header">
         <div>
-          <h2>Study Rooms Hosted by Vlad</a>
-          </h2>
         </div>
       </div>
       {% include 'base/feed_component.html' %}

@@ -7,6 +7,7 @@ urlpatterns = [
     path('register/', views.registerPage, name="register"),
 
     path('', views.home, name="home"),
+    path('chat/', views.chat, name="chat"),
     path('room/<str:pk>/', views.room, name="room"),
     path('profile/<str:pk>/', views.userProfile, name="user-profile"),
 
@@ -25,6 +26,11 @@ urlpatterns = [
     path('dict2/', views.dict2, name="dict2"),
     path('dict3/', views.dict3, name="dict3"),
     path('dict4/', views.dict4, name="dict4"),
+
+    path('task1/', views.task1, name="task1"),
+    path('task2/', views.task2, name="task2"),
+    path('task3/', views.task3, name="task3"),
+    path('task4/', views.task4, name="task4"),
 ]
 
 

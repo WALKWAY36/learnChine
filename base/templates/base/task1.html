@@ -2,20 +2,21 @@
 {% block content %}
 
 <div class="container">
-  <h1>Словарь1</h1>
+  <h1>Задание1</h1>
   {{ request.user.username }}
-  {% if stat.word == 0 %}
-  <form id="done-form" method="post" action="{% url 'dict1' %}">
+  {% if statT.task == 0 %}
+  <form id="done-form" method="post" action="{% url 'task1' %}">
     {% csrf_token %}
     <button id="done-button" type="submit" name="done" value="Выполнено">Готово</button>
   </form>
-  {% elif stat.word < 4 %}
-  <h1>Вы уже знаете это слово</h1>
+  {% elif statT.task < 4 %}
+  <h1>Вы уже сделали это задание</h1>
   {% else %}
-  <h1>Поздравляю вы изучили все слова</h1>
+  <h1>Поздравляю вы выполнили все задания</h1>
   {% endif %}
   <a href="{% url 'home' %}"><i class="arrow left"></i></a>
-  <a href="{% url 'dict2' %}"><i class="arrow right"></i></a>
+  <a href="{% url 'task2' %}"><i class="arrow right"></i></a>
+
 </div>
 
 {% endblock content %}

@@ -272,7 +272,7 @@ a {
 
 .header > .container {
   display: flex;
-  gap: 9.5rem;
+  gap: 5.5rem;
 }
 
 .header__logo,
@@ -295,7 +295,7 @@ a {
 
 .header__search > label {
   background-color: var(--color-dark-medium);
-  padding: 1.3rem 1rem;
+  padding: 1rem 1rem;
   display: flex;
   align-items: center;
   gap: 1rem;

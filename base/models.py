@@ -52,4 +52,8 @@ class Message(models.Model):
 
 class Statistic(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    task = models.IntegerField(default=0,  validators=[MaxValueValidator(5)])
+    word = models.IntegerField(default=0,  validators=[MaxValueValidator(5)])
+
+class Task(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    task = models.IntegerField(default=0, validators=[MaxValueValidator(5)])
